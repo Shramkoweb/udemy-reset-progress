@@ -4,6 +4,7 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   extensionApi: "chrome",
   manifest: {
+    name: "Udemy Reset Progress",
     permissions: ["scripting", "activeTab"],
   },
   modules: ["@wxt-dev/module-solid"],

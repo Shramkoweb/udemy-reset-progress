@@ -13,8 +13,7 @@ A browser extension that allows you to quickly reset your progress in Udemy cour
 ## Installation
 
 ### Chrome Web Store
-*Coming soon*
-[<img src="https://developer.chrome.com/static/docs/webstore/branding/image/YT2Grfi9vEBa2wAPzhWa.png" alt="Chrome" height="60px">](/)
+[<img src="https://developer.chrome.com/static/docs/webstore/branding/image/YT2Grfi9vEBa2wAPzhWa.png" alt="Chrome" height="60px">](https://chromewebstore.google.com/detail/udemy-reset-progress/dddnklikfgdefjekcbhehjogkpfkbdlo)
 
 ### Firefox Add-ons
 *Coming soon*

@@ -1,4 +1,5 @@
 export default defineContentScript({
-  matches: ['*://*.udemy.com/*'], main(ctx) {
+  matches: ["*://*.udemy.com/*"],
+  main(ctx) {
   },
 });

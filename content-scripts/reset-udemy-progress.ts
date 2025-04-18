@@ -18,7 +18,7 @@ export const resetUdemyProgress = async (): Promise<void> => {
     if (sectionToggles && sectionToggles.length !== 0) {
       for (const toggler of sectionToggles) {
         const previousElement = toggler.previousElementSibling;
-        const isTogglerChecked = previousElement?.getAttribute(SELECTOR.CHECKED_ATTR) === 'checked';
+        const isTogglerChecked = previousElement?.getAttribute(SELECTOR.CHECKED_ATTR) === "checked";
 
         if (!isTogglerChecked && toggler instanceof HTMLElement) {
           toggler.click();
@@ -37,12 +37,12 @@ export const resetUdemyProgress = async (): Promise<void> => {
         }
 
         if (toggler instanceof HTMLElement) {
-          toggler?.click()
+          toggler?.click();
         }
       }
     }
   } catch (error) {
-    console.error('Error resetting curriculum progress:', error);
+    console.error("Error resetting curriculum progress:", error);
     throw error;
   }
-}
+};

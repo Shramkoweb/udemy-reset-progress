@@ -9,21 +9,21 @@ importers:
   .:
     dependencies:
       solid-js:
-        specifier: ^1.9.7
-        version: 1.9.7
+        specifier: ^1.9.9
+        version: 1.9.9
     devDependencies:
       '@types/chrome':
-        specifier: ^0.0.329
-        version: 0.0.329
+        specifier: ^0.1.3
+        version: 0.1.3
       '@wxt-dev/module-solid':
         specifier: ^1.1.3
-        version: 1.1.3(solid-js@1.9.7)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0))(wxt@0.20.7(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0))
+        version: 1.1.3(solid-js@1.9.9)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0))(wxt@0.20.8(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0))
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
       daisyui:
-        specifier: ^5.0.46
-        version: 5.0.46
+        specifier: ^5.0.50
+        version: 5.0.50
       postcss:
         specifier: ^8.5.6
         version: 8.5.6
@@ -31,11 +31,11 @@ importers:
         specifier: ^3.4.17
         version: 3.4.17
       typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
+        specifier: ^5.9.2
+        version: 5.9.2
       wxt:
-        specifier: ^0.20.7
-        version: 0.20.7(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0)
+        specifier: ^0.20.8
+        version: 0.20.8(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0)
 
 packages:
 
@@ -613,8 +613,8 @@ packages:
   '@types/babel__traverse@7.20.6':
     resolution: {integrity: sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==}
 
-  '@types/chrome@0.0.329':
-    resolution: {integrity: sha512-jAZX4QMnAa1bTSWoQ5/EhhiY1t+1B7a5ZCY5ZEs61tWiQfxXAkfBSxCkQWhGxJoiq/4b4vtcmYEebNEmlLKecg==}
+  '@types/chrome@0.1.3':
+    resolution: {integrity: sha512-KVOIHEKjDZXMg8c18Ir3kbLc+bb8JxZjNJv27Wen3F0I/eeTyrYm7tWOjGhoBjI9fFQfjsTSyFcENBo9Wbl5kw==}
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
@@ -649,8 +649,8 @@ packages:
   '@webext-core/match-patterns@1.0.3':
     resolution: {integrity: sha512-NY39ACqCxdKBmHgw361M9pfJma8e4AZo20w9AY+5ZjIj1W2dvXC8J31G5fjfOGbulW9w4WKpT8fPooi0mLkn9A==}
 
-  '@wxt-dev/browser@0.0.326':
-    resolution: {integrity: sha512-4Pb4ES7jMsxYFHEEhK005bOL2BnDEXO3jjZTOvF0gWdota8Ytpg81VtKVSC1ohj17C6tE6oNI3FdcVRfKUBl3Q==}
+  '@wxt-dev/browser@0.1.3':
+    resolution: {integrity: sha512-IKoRi+YqAZ135XIzmNsER8tOudd4e3C46CjqPC4Ao0YufxGlUO1PbRVRf2g94uMRCQpe6DaYQhBLOjwGua6S4g==}
 
   '@wxt-dev/module-solid@1.1.3':
     resolution: {integrity: sha512-iQthYvhe3OieJTLSq9z6747cYKHZ7XOVX/Cl5Rop/k+gcJ795u0j4lvVs3Tn+55uAC7xEye0eG2sLocaXZDZcg==}
@@ -964,8 +964,8 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
-  daisyui@5.0.46:
-    resolution: {integrity: sha512-vMDZK1tI/bOb2Mc3Mk5WpquBG3ZqBz1YKZ0xDlvpOvey60dOS4/5Qhdowq1HndbQl7PgDLDYysxAjjUjwR7/eQ==}
+  daisyui@5.0.50:
+    resolution: {integrity: sha512-c1PweK5RI1C76q58FKvbS4jzgyNJSP6CGTQ+KkZYzADdJoERnOxFoeLfDHmQgxLpjEzlYhFMXCeodQNLCC9bow==}
 
   debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -2071,8 +2071,8 @@ packages:
     resolution: {integrity: sha512-bSiSngZ/jWeX93BqeIAbImyTbEihizcwNjFoRUIY/T1wWQsfsm2Vw1agPKylXvQTU7iASGdHhyqRlqQzfz+Htg==}
     engines: {node: '>=18'}
 
-  solid-js@1.9.7:
-    resolution: {integrity: sha512-/saTKi8iWEM233n5OSi1YHCCuh66ZIQ7aK2hsToPe4tqGm7qAejU1SwNuTPivbWAYq7SjuHVVYxxuZQNRbICiw==}
+  solid-js@1.9.9:
+    resolution: {integrity: sha512-A0ZBPJQldAeGCTW0YRYJmt7RCeh5rbFfPZ2aOttgYnctHE7HgKeHCBB/PVc2P7eOfmNXqMFFFoYYdm3S4dcbkA==}
 
   solid-refresh@0.6.3:
     resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
@@ -2234,8 +2234,8 @@ packages:
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
 
-  typescript@5.8.3:
-    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+  typescript@5.9.2:
+    resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -2440,8 +2440,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  wxt@0.20.7:
-    resolution: {integrity: sha512-KABq5i3CnXMUaJTcORGDLCi04K/IceUVAx5rler2QbZpLvS13OUOO0k+4s/7LI3+N8zXLh/GlQArMyJfk3M2yQ==}
+  wxt@0.20.8:
+    resolution: {integrity: sha512-aP6SY7oUK1+uqG5fVdFaBeFTXJ+Av/CRTYM47ljZnSSd18zJhevwU+JU7wFKAJwYomEK1eHE+F9YVAKmA82EbA==}
     hasBin: true
 
   xdg-basedir@5.1.0:
@@ -2932,7 +2932,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.8
 
-  '@types/chrome@0.0.329':
+  '@types/chrome@0.1.3':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
@@ -2970,15 +2970,15 @@ snapshots:
 
   '@webext-core/match-patterns@1.0.3': {}
 
-  '@wxt-dev/browser@0.0.326':
+  '@wxt-dev/browser@0.1.3':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
 
-  '@wxt-dev/module-solid@1.1.3(solid-js@1.9.7)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0))(wxt@0.20.7(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0))':
+  '@wxt-dev/module-solid@1.1.3(solid-js@1.9.9)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0))(wxt@0.20.8(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0))':
     dependencies:
-      vite-plugin-solid: 2.11.1(solid-js@1.9.7)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0))
-      wxt: 0.20.7(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0)
+      vite-plugin-solid: 2.11.1(solid-js@1.9.9)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0))
+      wxt: 0.20.8(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0)
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - solid-js
@@ -3305,7 +3305,7 @@ snapshots:
 
   csstype@3.1.3: {}
 
-  daisyui@5.0.46: {}
+  daisyui@5.0.50: {}
 
   debounce@1.2.1: {}
 
@@ -4413,18 +4413,18 @@ snapshots:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 5.0.0
 
-  solid-js@1.9.7:
+  solid-js@1.9.9:
     dependencies:
       csstype: 3.1.3
       seroval: 1.3.2
       seroval-plugins: 1.3.2(seroval@1.3.2)
 
-  solid-refresh@0.6.3(solid-js@1.9.7):
+  solid-refresh@0.6.3(solid-js@1.9.9):
     dependencies:
       '@babel/generator': 7.26.8
       '@babel/helper-module-imports': 7.25.9
       '@babel/types': 7.26.8
-      solid-js: 1.9.7
+      solid-js: 1.9.9
     transitivePeerDependencies:
       - supports-color
 
@@ -4592,7 +4592,7 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typescript@5.8.3: {}
+  typescript@5.9.2: {}
 
   ufo@1.5.4: {}
 
@@ -4671,14 +4671,14 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-solid@2.11.1(solid-js@1.9.7)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0)):
+  vite-plugin-solid@2.11.1(solid-js@1.9.9)(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0)):
     dependencies:
       '@babel/core': 7.26.8
       '@types/babel__core': 7.20.5
       babel-preset-solid: 1.9.3(@babel/core@7.26.8)
       merge-anything: 5.1.7
-      solid-js: 1.9.7
-      solid-refresh: 0.6.3(solid-js@1.9.7)
+      solid-js: 1.9.9
+      solid-refresh: 0.6.3(solid-js@1.9.9)
       vite: 6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0)
       vitefu: 1.0.5(vite@6.3.5(@types/node@22.13.1)(jiti@2.4.2)(yaml@2.7.0))
     transitivePeerDependencies:
@@ -4791,14 +4791,14 @@ snapshots:
 
   ws@8.18.1: {}
 
-  wxt@0.20.7(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0):
+  wxt@0.20.8(@types/node@22.13.1)(jiti@2.4.2)(rollup@4.40.0)(yaml@2.7.0):
     dependencies:
       '@1natsu/wait-element': 4.1.2
       '@aklinker1/rollup-plugin-visualizer': 5.12.0(rollup@4.40.0)
       '@webext-core/fake-browser': 1.3.2
       '@webext-core/isolated-element': 1.1.2
       '@webext-core/match-patterns': 1.0.3
-      '@wxt-dev/browser': 0.0.326
+      '@wxt-dev/browser': 0.1.3
       '@wxt-dev/storage': 1.1.0
       async-mutex: 0.5.0
       c12: 3.0.3(magicast@0.3.5)

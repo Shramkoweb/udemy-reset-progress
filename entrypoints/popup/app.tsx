@@ -13,7 +13,7 @@ type State = "initial" | "progress" | "done" | "error";
 const RESET_TIMEOUT_MS = 2000;
 
 const statusToButtonText: { [key in State]: string | JSX.Element } = {
-  initial: "Clear Progress",
+  initial: "Clear Progress!",
   progress: <span class="loading loading-spinner"></span>,
   done: "Done! 🚀",
   error: "Try Again"

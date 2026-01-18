@@ -22,8 +22,8 @@ importers:
         specifier: 10.4.23
         version: 10.4.23(postcss@8.5.6)
       daisyui:
-        specifier: 5.0.55
-        version: 5.0.55
+        specifier: 5.2.5
+        version: 5.2.5
       postcss:
         specifier: 8.5.6
         version: 8.5.6
@@ -801,8 +801,8 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
-  daisyui@5.0.55:
-    resolution: {integrity: sha512-lx7dMR8/Ov/QZz3q4xDrZMZVBr7tw77GtazFigvVY6u6aO/p0gwRgnXaYbSy7nZc3yncRdrMQmt9IbvlCPHGMw==}
+  daisyui@5.2.5:
+    resolution: {integrity: sha512-TBsCRI8WA9t/Itr9NKSaDUx/FUFHmBVbtB0ZykFHGMQPwe+VV8GEqF6dKYZcXI+Ljhm3N56ncWTtCwnKDDbOXQ==}
 
   debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -2722,7 +2722,7 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  daisyui@5.0.55: {}
+  daisyui@5.2.5: {}
 
   debounce@1.2.1: {}
 

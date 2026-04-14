@@ -30,16 +30,16 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
-    "solid-js": "1.9.10"
+    "solid-js": "1.9.12"
   },
   "devDependencies": {
-    "@types/chrome": "0.1.33",
+    "@types/chrome": "0.1.40",
     "@wxt-dev/module-solid": "1.1.4",
-    "autoprefixer": "10.4.23",
-    "daisyui": "5.2.5",
-    "postcss": "8.5.6",
+    "autoprefixer": "10.5.0",
+    "daisyui": "4.12.24",
+    "postcss": "8.5.9",
     "tailwindcss": "3.4.19",
     "typescript": "5.9.3",
-    "wxt": "0.20.13"
+    "wxt": "0.20.22"
   }
 }

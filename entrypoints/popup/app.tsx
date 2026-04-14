@@ -65,7 +65,7 @@ export default function App() {
         <div class="stat-actions w-full mb-8">
           <button
             onClick={handleClick}
-            class="btn btn-primary btn-wide transition-all hover:scale-105"
+            class="btn btn-neutral w-full transition-all hover:scale-105"
             disabled={status() === "progress"}
             aria-busy={status() === "progress"}
             aria-label="Clear Udemy progress"

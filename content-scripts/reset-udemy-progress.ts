@@ -1,4 +1,4 @@
-export const resetUdemyProgress = async (): Promise<void> => {
+export const resetUdemyProgress = async (delayMs: number = 50): Promise<void> => {
   const SELECTOR = {
     SECTION_CONTAINER: "[data-purpose='curriculum-section-container']",
     SECTION_TOGGLE: "[data-css-toggle-id]",
@@ -6,7 +6,7 @@ export const resetUdemyProgress = async (): Promise<void> => {
     LESSON_CONTAINER: "[data-purpose^='section-panel-']",
     LESSON_TOGGLE: "[data-purpose='progress-toggle-button']"
   } as const;
-  const DELAY_MS = 50;
+  const DELAY_MS = delayMs;
 
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 

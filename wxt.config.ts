@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   manifest: {
     name: "Udemy Reset Progress",
-    permissions: ["scripting", "activeTab"],
+    permissions: ["scripting", "activeTab", "storage"],
   },
   modules: ["@wxt-dev/module-solid"],
   vite: () => ({

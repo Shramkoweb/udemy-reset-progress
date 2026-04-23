@@ -33,12 +33,12 @@
     "solid-js": "1.9.12"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "4.2.2",
+    "@tailwindcss/vite": "4.2.4",
     "@types/chrome": "0.1.40",
     "@wxt-dev/module-solid": "1.1.4",
     "daisyui": "5.5.19",
-    "tailwindcss": "4.2.2",
-    "typescript": "6.0.2",
-    "wxt": "0.20.22"
+    "tailwindcss": "4.2.4",
+    "typescript": "6.0.3",
+    "wxt": "0.20.25"
   }
 }

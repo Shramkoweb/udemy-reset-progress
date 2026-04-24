@@ -39,6 +39,6 @@
     "daisyui": "5.5.19",
     "tailwindcss": "4.2.4",
     "typescript": "6.0.3",
-    "wxt": "0.20.25"
+    "wxt": "0.21.0"
   }
 }

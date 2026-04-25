@@ -6,7 +6,7 @@ export type CompleteResult = {
   error: "NO_CURRICULUM" | "NO_SECTIONS";
 };
 
-export const completeUdemyProgress = async (delayMs: number = 50): Promise<CompleteResult> => {
+export const completeUdemyProgress = async (pacing: { delayMs: number; batchSize: number; cooldownMs: number }): Promise<CompleteResult> => {
   const SELECTOR = {
     SECTION_CONTAINER: "[data-purpose='curriculum-section-container']",
     SECTION_TOGGLE: "[data-css-toggle-id]",
@@ -36,7 +36,7 @@ export const completeUdemyProgress = async (delayMs: number = 50): Promise<Compl
 
     if (!isTogglerChecked && toggler instanceof HTMLElement) {
       toggler.click();
-      await sleep(delayMs);
+      await sleep(pacing.delayMs);
     }
 
     for (const lesson of lessons) {
@@ -46,7 +46,9 @@ export const completeUdemyProgress = async (delayMs: number = 50): Promise<Compl
         if (button instanceof HTMLInputElement && !button.checked) {
           button.click();
           toggled++;
-          await sleep(delayMs);
+
+          const isBatchEnd = pacing.batchSize > 0 && toggled % pacing.batchSize === 0;
+          await sleep(isBatchEnd ? pacing.cooldownMs : pacing.delayMs);
         }
       }
     }

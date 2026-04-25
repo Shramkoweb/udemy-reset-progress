@@ -27,6 +27,7 @@ export function resolvePacing(
 
     case "custom":
       if (!custom) return { ...PRESETS.balanced };
-      return { delayMs: custom.delayMs, batchSize: custom.batchSize, cooldownMs: 0 };
+      const cooldownMs = custom.batchSize > 0 ? Math.max(1000, custom.delayMs * 6) : 0;
+      return { delayMs: custom.delayMs, batchSize: custom.batchSize, cooldownMs };
   }
 }

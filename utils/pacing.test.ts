@@ -32,9 +32,19 @@ describe("resolvePacing", () => {
     expect(resolvePacing("auto")).toEqual(PRESETS.balanced);
   });
 
-  it("returns custom values", () => {
+  it("returns custom values with derived cooldown", () => {
     expect(resolvePacing("custom", { delayMs: 500, batchSize: 10 }))
-      .toEqual({ delayMs: 500, batchSize: 10, cooldownMs: 0 });
+      .toEqual({ delayMs: 500, batchSize: 10, cooldownMs: 3000 });
+  });
+
+  it("returns no cooldown when custom batch size is 0", () => {
+    expect(resolvePacing("custom", { delayMs: 500, batchSize: 0 }))
+      .toEqual({ delayMs: 500, batchSize: 0, cooldownMs: 0 });
+  });
+
+  it("enforces minimum 1s cooldown for custom", () => {
+    expect(resolvePacing("custom", { delayMs: 50, batchSize: 5 }))
+      .toEqual({ delayMs: 50, batchSize: 5, cooldownMs: 1000 });
   });
 
   it("falls back to balanced when custom values missing", () => {

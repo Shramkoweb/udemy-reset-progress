@@ -1,9 +1,9 @@
-import { createEffect, createSignal, JSX, onCleanup } from "solid-js";
+import { createEffect, createSignal, JSX, onCleanup, onMount } from "solid-js";
 
 import type { ScriptResult } from "@/content-scripts/reset-udemy-progress";
 import { resetUdemyProgress } from "@/content-scripts/reset-udemy-progress";
 import { completeUdemyProgress } from "@/content-scripts/complete-udemy-progress";
-import { delayItem } from "@/utils/storage";
+import { AMO_URL, CWS_URL, delayItem, popupOpensItem, successCountItem } from "@/utils/storage";
 
 import "~/assets/tailwind.css";
 
@@ -14,11 +14,26 @@ const ERROR_MESSAGES: Record<string, string> = {
   NO_CURRICULUM: "Open a Udemy course page first", NO_SECTIONS: "No course sections found on this page",
 };
 
+const STORE_URL = navigator.userAgent.includes("Firefox") ? AMO_URL : CWS_URL;
+
 export default function App() {
   const [resetStatus, setResetStatus] = createSignal<State>("initial");
   const [completeStatus, setCompleteStatus] = createSignal<State>("initial");
   const [errorMessage, setErrorMessage] = createSignal("");
+  const [popupOpens, setPopupOpens] = createSignal(0);
+  const [successCount, setSuccessCount] = createSignal(0);
+  const [shareCopied, setShareCopied] = createSignal(false);
   let resetTimer: ReturnType<typeof setTimeout> | null = null;
+
+  onMount(async () => {
+    const opens = await popupOpensItem.getValue();
+    const next = opens + 1;
+    setPopupOpens(next);
+    await popupOpensItem.setValue(next);
+
+    const successes = await successCountItem.getValue();
+    setSuccessCount(successes);
+  });
 
   const executeScript = async (func: typeof resetUdemyProgress | typeof completeUdemyProgress, setStatus: (s: State) => void) => {
     try {
@@ -44,6 +59,10 @@ export default function App() {
         return;
       }
 
+      const newCount = successCount() + 1;
+      setSuccessCount(newCount);
+      await successCountItem.setValue(newCount);
+
       setStatus("done");
     } catch {
       setErrorMessage("Make sure you're on a Udemy page");
@@ -53,6 +72,12 @@ export default function App() {
 
   const handleReset = () => executeScript(resetUdemyProgress, setResetStatus);
   const handleComplete = () => executeScript(completeUdemyProgress, setCompleteStatus);
+
+  const handleShare = async () => {
+    await navigator.clipboard.writeText(STORE_URL);
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 2000);
+  };
 
   createEffect(() => {
     if (resetStatus() === "done" || resetStatus() === "error") {
@@ -92,6 +117,34 @@ export default function App() {
         </span>), done: <span>Done</span>, error: <span>Try Again</span>,
     };
     return map[status];
+  };
+
+  const renderFooter = () => {
+    if (popupOpens() >= 4 && popupOpens() <= 7) {
+      return (<a
+          target="_blank"
+          href={STORE_URL}
+          class="text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60"
+        >
+          Enjoying this? <span class="text-amber-400">&#9733;</span> Rate
+        </a>);
+    }
+    if (successCount() >= 3) {
+      return (<button
+          type="button"
+          onClick={handleShare}
+          class="text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60"
+        >
+          {shareCopied() ? "Link copied!" : "Share with a friend"}
+        </button>);
+    }
+    return (<a
+        target="_blank"
+        href="https://shramko.dev/?utm_source=udemy-reset-progress&utm_medium=bottom_link&utm_campaign=all&utm_id=promo"
+        class="text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60"
+      >
+        shramko.dev
+      </a>);
   };
 
   return (<div class="w-80 p-4 font-sans">
@@ -171,13 +224,7 @@ export default function App() {
         </div>)}
 
       <div class="mt-3.5 text-center">
-        <a
-          target="_blank"
-          href="https://shramko.dev/?utm_source=udemy-reset-progress&utm_medium=bottom_link&utm_campaign=all&utm_id=promo"
-          class="text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60"
-        >
-          shramko.dev
-        </a>
+        {renderFooter()}
       </div>
     </div>);
 }

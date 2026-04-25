@@ -1,12 +1,7 @@
-import {
-  createEffect,
-  createSignal,
-  JSX,
-  onCleanup
-} from "solid-js";
+import { createEffect, createSignal, JSX, onCleanup } from "solid-js";
 
-import { resetUdemyProgress } from "@/content-scripts/reset-udemy-progress";
 import type { ScriptResult } from "@/content-scripts/reset-udemy-progress";
+import { resetUdemyProgress } from "@/content-scripts/reset-udemy-progress";
 import { completeUdemyProgress } from "@/content-scripts/complete-udemy-progress";
 import { delayItem } from "@/utils/storage";
 
@@ -16,8 +11,7 @@ type State = "initial" | "progress" | "done" | "error";
 const RESET_TIMEOUT_MS = 2000;
 
 const ERROR_MESSAGES: Record<string, string> = {
-  NO_CURRICULUM: "Open a Udemy course page first",
-  NO_SECTIONS: "No course sections found on this page",
+  NO_CURRICULUM: "Open a Udemy course page first", NO_SECTIONS: "No course sections found on this page",
 };
 
 export default function App() {
@@ -26,16 +20,12 @@ export default function App() {
   const [errorMessage, setErrorMessage] = createSignal("");
   let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
-  const executeScript = async (
-    func: typeof resetUdemyProgress | typeof completeUdemyProgress,
-    setStatus: (s: State) => void,
-  ) => {
+  const executeScript = async (func: typeof resetUdemyProgress | typeof completeUdemyProgress, setStatus: (s: State) => void) => {
     try {
       setStatus("progress");
       setErrorMessage("");
       const [{ id: tabId }] = await browser.tabs.query({
-        active: true,
-        currentWindow: true,
+        active: true, currentWindow: true,
       });
       if (!tabId) {
         setErrorMessage("Cannot access the current tab");
@@ -44,9 +34,7 @@ export default function App() {
       }
       const delay = await delayItem.getValue();
       const [{ result }] = await browser.scripting.executeScript({
-        target: { tabId },
-        func,
-        args: [delay],
+        target: { tabId }, func, args: [delay],
       });
 
       const scriptResult = result as ScriptResult | undefined;
@@ -98,21 +86,15 @@ export default function App() {
 
   const buttonContent = (status: State, label: string, activeLabel: string): JSX.Element => {
     const map: { [key in State]: JSX.Element } = {
-      initial: <span>{label}</span>,
-      progress: (
-        <span class="inline-flex items-center gap-2">
+      initial: <span>{label}</span>, progress: (<span class="inline-flex items-center gap-2">
           <span class="loading loading-spinner loading-xs"></span>
           {activeLabel}
-        </span>
-      ),
-      done: <span>Done</span>,
-      error: <span>Try Again</span>,
+        </span>), done: <span>Done</span>, error: <span>Try Again</span>,
     };
     return map[status];
   };
 
-  return (
-    <div class="w-80 p-4 font-sans">
+  return (<div class="w-80 p-4 font-sans">
       <div class="flex items-center justify-between mb-3.5">
         <div>
           <h1 class="text-[15px] font-semibold tracking-tight text-ink">
@@ -129,7 +111,11 @@ export default function App() {
           title="Settings"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+            <path
+              fill-rule="evenodd"
+              d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+              clip-rule="evenodd"
+            />
           </svg>
         </button>
       </div>
@@ -168,16 +154,21 @@ export default function App() {
         </button>
       </div>
 
-      {errorMessage() && (
-        <div class="mt-2.5 flex items-center gap-2 rounded-lg bg-bad-soft px-3 py-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 shrink-0 text-bad" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+      {errorMessage() && (<div class="mt-2.5 flex items-center gap-2 rounded-lg bg-bad-soft px-3 py-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 shrink-0 text-bad" viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clip-rule="evenodd"
+            />
           </svg>
           <p class="text-xs font-medium text-bad">
             {errorMessage()}
           </p>
-        </div>
-      )}
+        </div>)}
 
       <div class="mt-3.5 text-center">
         <a
@@ -188,6 +179,5 @@ export default function App() {
           shramko.dev
         </a>
       </div>
-    </div>
-  );
+    </div>);
 }

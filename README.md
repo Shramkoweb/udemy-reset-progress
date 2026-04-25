@@ -1,21 +1,24 @@
-# Udemy Reset Progress Extension
+# Udemy Reset Progress
 
-A browser extension that allows you to quickly reset your progress in Udemy courses. Built with WXT, SolidJS, and TailwindCSS.
+Reset or mark complete your Udemy course progress in one click. Built with [WXT](https://wxt.dev/), [SolidJS](https://www.solidjs.com/), and [TailwindCSS](https://tailwindcss.com/).
 
 ## Features
 
-- 🚀 One-click progress reset
-- ⚡️ Fast and lightweight
-- 🎨 Clean, minimal interface
-- 💪 TypeScript support
-- 🔒 Works only on Udemy course pages
+- **Clear Progress** — reset all lecture completion checkmarks across every section
+- **Mark All Complete** — mark every lecture as completed in one click
+- **Configurable delay** — adjust speed (50–500ms) to avoid rate-limiting
+- **Lightweight** — under 35 KiB, no background processes
+- **Private** — zero data collection, zero analytics, zero network requests
+- **Cross-browser** — Chrome, Firefox, and Edge
 
 ## Installation
 
 ### Chrome Web Store
+
 [<img src="https://developer.chrome.com/static/docs/webstore/branding/image/YT2Grfi9vEBa2wAPzhWa.png" alt="Chrome" height="60px">](https://chromewebstore.google.com/detail/udemy-reset-progress/dddnklikfgdefjekcbhehjogkpfkbdlo)
 
 ### Firefox Add-ons
+
 [<img src="https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png" alt="Firefox">](https://addons.mozilla.org/en-US/firefox/addon/udemy-reset-progress/)
 
 ### Manual Installation
@@ -27,47 +30,56 @@ git clone https://github.com/Shramkoweb/udemy-reset-progress.git
 
 2. Install dependencies:
 ```
-npm install
+pnpm install
 ```
 
 3. Build the extension:
 ```
 # For Chrome
-npm run build
+pnpm run build
 
 # For Firefox
-npm run build:firefox
+pnpm run build:firefox
 ```
 
 4. Load the extension:
-- Chrome: Go to `chrome://extensions/`, enable "Developer mode", and click "Load unpacked". Select the `extension/dist` directory.
-- Firefox: Go to `about:debugging`, click "This Firefox", click "Load Temporary Add-on", and select any file from the `extension/dist` directory.
+   - **Chrome**: Go to `chrome://extensions/`, enable "Developer mode", click "Load unpacked", select `.output/chrome-mv3`
+   - **Firefox**: Go to `about:debugging`, click "This Firefox", click "Load Temporary Add-on", select any file from `.output/firefox-mv2`
+
+## Usage
+
+1. Open any Udemy course page (the curriculum/lecture view)
+2. Click the extension icon in your toolbar
+3. Choose **Clear Progress** to reset or **Mark All Complete** to finish
+4. Done
+
+If you experience rate-limiting or unexpected logouts, increase the action delay in Settings (gear icon).
 
 ## Development
 
 ```
 # Start development server for Chrome
-npm run dev
+pnpm run dev
 
 # Start development server for Firefox
-npm run dev:firefox
+pnpm run dev:firefox
 
 # Type checking
-npm run compile
+pnpm run compile
 
 # Build extension
-npm run build
+pnpm run build
 
 # Create distribution ZIP
-npm run zip
+pnpm run zip
 ```
 
 ## Tech Stack
 
-- [WXT](https://wxt.dev/) - Web Extension Framework
-- [SolidJS](https://www.solidjs.com/) - UI Framework
-- [TailwindCSS](https://tailwindcss.com/) - CSS Framework
-- [DaisyUI](https://daisyui.com/) - Component Library
+- [WXT](https://wxt.dev/) — Web Extension Framework
+- [SolidJS](https://www.solidjs.com/) — UI Framework
+- [TailwindCSS](https://tailwindcss.com/) — CSS Framework
+- [DaisyUI](https://daisyui.com/) — Component Library
 - TypeScript
 
 ## License
@@ -80,8 +92,8 @@ npm run zip
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Shramkoweb/udemy-reset-progress/issues).
+Contributions, issues, and feature requests are welcome! Check the [issues page](https://github.com/Shramkoweb/udemy-reset-progress/issues).
 
 ## Support
 
-If you found this project helpful, please consider giving it a ⭐️!
+If you found this project helpful, please consider giving it a star!

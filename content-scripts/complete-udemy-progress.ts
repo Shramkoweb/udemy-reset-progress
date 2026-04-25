@@ -1,4 +1,4 @@
-export type ScriptResult = {
+export type CompleteResult = {
   success: true;
   toggled: number;
 } | {
@@ -6,7 +6,7 @@ export type ScriptResult = {
   error: "NO_CURRICULUM" | "NO_SECTIONS";
 };
 
-export const resetUdemyProgress = async (delayMs: number = 50): Promise<ScriptResult> => {
+export const completeUdemyProgress = async (delayMs: number = 50): Promise<CompleteResult> => {
   const SELECTOR = {
     SECTION_CONTAINER: "[data-purpose='curriculum-section-container']",
     SECTION_TOGGLE: "[data-css-toggle-id]",
@@ -43,7 +43,7 @@ export const resetUdemyProgress = async (delayMs: number = 50): Promise<ScriptRe
       const completeProgressButtons = lesson.querySelectorAll(SELECTOR.LESSON_TOGGLE);
 
       for (const button of completeProgressButtons) {
-        if (button instanceof HTMLInputElement && button.checked) {
+        if (button instanceof HTMLInputElement && !button.checked) {
           button.click();
           toggled++;
           await sleep(delayMs);

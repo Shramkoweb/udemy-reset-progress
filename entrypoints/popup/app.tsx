@@ -6,6 +6,8 @@ import {
 } from "solid-js";
 
 import { resetUdemyProgress } from "@/content-scripts/reset-udemy-progress";
+import type { ScriptResult } from "@/content-scripts/reset-udemy-progress";
+import { completeUdemyProgress } from "@/content-scripts/complete-udemy-progress";
 import { delayItem } from "@/utils/storage";
 
 import "~/assets/tailwind.css";
@@ -13,39 +15,72 @@ import "~/assets/tailwind.css";
 type State = "initial" | "progress" | "done" | "error";
 const RESET_TIMEOUT_MS = 2000;
 
-export default function App() {
-  const [status, setStatus] = createSignal<State>("initial");
-  let resetTimer: NodeJS.Timeout | null = null;
+const ERROR_MESSAGES: Record<string, string> = {
+  NO_CURRICULUM: "Open a Udemy course page first",
+  NO_SECTIONS: "No course sections found on this page",
+};
 
-  const handleClick = async () => {
+export default function App() {
+  const [resetStatus, setResetStatus] = createSignal<State>("initial");
+  const [completeStatus, setCompleteStatus] = createSignal<State>("initial");
+  const [errorMessage, setErrorMessage] = createSignal("");
+  let resetTimer: ReturnType<typeof setTimeout> | null = null;
+
+  const executeScript = async (
+    func: typeof resetUdemyProgress | typeof completeUdemyProgress,
+    setStatus: (s: State) => void,
+  ) => {
     try {
       setStatus("progress");
+      setErrorMessage("");
       const [{ id: tabId }] = await browser.tabs.query({
         active: true,
         currentWindow: true,
       });
-      if (tabId) {
-        const delay = await delayItem.getValue();
-        await browser.scripting.executeScript({
-          target: { tabId },
-          func: resetUdemyProgress,
-          args: [delay],
-        });
-        setStatus("done");
-      } else {
+      if (!tabId) {
+        setErrorMessage("Cannot access the current tab");
         setStatus("error");
-        console.error("tab.id undefined");
+        return;
       }
-    } catch (error) {
+      const delay = await delayItem.getValue();
+      const [{ result }] = await browser.scripting.executeScript({
+        target: { tabId },
+        func,
+        args: [delay],
+      });
+
+      const scriptResult = result as ScriptResult | undefined;
+      if (scriptResult && !scriptResult.success) {
+        setErrorMessage(ERROR_MESSAGES[scriptResult.error] ?? "Something went wrong");
+        setStatus("error");
+        return;
+      }
+
+      setStatus("done");
+    } catch {
+      setErrorMessage("Make sure you're on a Udemy page");
       setStatus("error");
-      console.error({ error });
-      resetTimer = setTimeout(() => setStatus("initial"), RESET_TIMEOUT_MS);
     }
   };
 
+  const handleReset = () => executeScript(resetUdemyProgress, setResetStatus);
+  const handleComplete = () => executeScript(completeUdemyProgress, setCompleteStatus);
+
   createEffect(() => {
-    if (status() === "done") {
-      resetTimer = setTimeout(() => setStatus("initial"), RESET_TIMEOUT_MS);
+    if (resetStatus() === "done" || resetStatus() === "error") {
+      resetTimer = setTimeout(() => {
+        setResetStatus("initial");
+        setErrorMessage("");
+      }, RESET_TIMEOUT_MS);
+    }
+  });
+
+  createEffect(() => {
+    if (completeStatus() === "done" || completeStatus() === "error") {
+      resetTimer = setTimeout(() => {
+        setCompleteStatus("initial");
+        setErrorMessage("");
+      }, RESET_TIMEOUT_MS);
     }
   });
 
@@ -59,16 +94,21 @@ export default function App() {
     browser.runtime.openOptionsPage();
   };
 
-  const buttonContent: { [key in State]: JSX.Element } = {
-    initial: <span>Clear Progress</span>,
-    progress: (
-      <span class="inline-flex items-center gap-2">
-        <span class="loading loading-spinner loading-xs"></span>
-        Resetting...
-      </span>
-    ),
-    done: <span>Done</span>,
-    error: <span>Try Again</span>,
+  const isAnyInProgress = () => resetStatus() === "progress" || completeStatus() === "progress";
+
+  const buttonContent = (status: State, label: string, activeLabel: string): JSX.Element => {
+    const map: { [key in State]: JSX.Element } = {
+      initial: <span>{label}</span>,
+      progress: (
+        <span class="inline-flex items-center gap-2">
+          <span class="loading loading-spinner loading-xs"></span>
+          {activeLabel}
+        </span>
+      ),
+      done: <span>Done</span>,
+      error: <span>Try Again</span>,
+    };
+    return map[status];
   };
 
   return (
@@ -89,21 +129,45 @@ export default function App() {
         </button>
       </div>
 
-      <button
-        onClick={handleClick}
-        class="btn w-full rounded-xl border-none text-sm font-medium shadow-sm transition-all duration-200"
-        classList={{
-          "bg-base-content text-base-100 hover:opacity-85 active:scale-[0.98]": status() === "initial",
-          "bg-base-200 text-base-content/60 cursor-wait": status() === "progress",
-          "bg-emerald-500 text-white": status() === "done",
-          "bg-red-500/90 text-white hover:bg-red-500": status() === "error",
-        }}
-        disabled={status() === "progress"}
-        aria-busy={status() === "progress"}
-        aria-label="Clear Udemy progress"
-      >
-        {buttonContent[status()]}
-      </button>
+      <div class="flex flex-col gap-2">
+        <button
+          onClick={handleReset}
+          class="btn w-full rounded-xl border-none text-sm font-medium shadow-sm transition-all duration-200"
+          classList={{
+            "bg-base-content text-base-100 hover:opacity-85 active:scale-[0.98]": resetStatus() === "initial",
+            "bg-base-200 text-base-content/60 cursor-wait": resetStatus() === "progress",
+            "bg-emerald-500 text-white": resetStatus() === "done",
+            "bg-red-500/90 text-white hover:bg-red-500": resetStatus() === "error",
+          }}
+          disabled={isAnyInProgress()}
+          aria-busy={resetStatus() === "progress"}
+          aria-label="Clear Udemy progress"
+        >
+          {buttonContent(resetStatus(), "Clear Progress", "Resetting...")}
+        </button>
+
+        <button
+          onClick={handleComplete}
+          class="btn w-full rounded-xl border-none text-sm font-medium shadow-sm transition-all duration-200"
+          classList={{
+            "bg-base-200 text-base-content/70 hover:bg-base-300 active:scale-[0.98]": completeStatus() === "initial",
+            "bg-base-200 text-base-content/60 cursor-wait": completeStatus() === "progress",
+            "bg-emerald-500 text-white": completeStatus() === "done",
+            "bg-red-500/90 text-white hover:bg-red-500": completeStatus() === "error",
+          }}
+          disabled={isAnyInProgress()}
+          aria-busy={completeStatus() === "progress"}
+          aria-label="Mark all lessons as complete"
+        >
+          {buttonContent(completeStatus(), "Mark All Complete", "Completing...")}
+        </button>
+      </div>
+
+      {errorMessage() && (
+        <p class="mt-2 text-center text-xs text-red-500/80">
+          {errorMessage()}
+        </p>
+      )}
 
       <div class="mt-4 text-center">
         <a

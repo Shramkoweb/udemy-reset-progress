@@ -27,6 +27,8 @@
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "postinstall": "wxt prepare"
   },
   "dependencies": {
@@ -39,6 +41,7 @@
     "daisyui": "5.5.19",
     "tailwindcss": "4.2.4",
     "typescript": "6.0.3",
+    "vitest": "^4.1.5",
     "wxt": "0.21.0"
   }
 }

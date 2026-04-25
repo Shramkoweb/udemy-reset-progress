@@ -112,14 +112,19 @@ export default function App() {
   };
 
   return (
-    <div class="w-72 p-5 font-sans">
-      <div class="flex items-center justify-between mb-4">
-        <h1 class="text-sm font-semibold tracking-tight text-base-content">
-          Udemy Reset Progress
-        </h1>
+    <div class="w-80 p-4 font-sans">
+      <div class="flex items-center justify-between mb-3.5">
+        <div>
+          <h1 class="text-[15px] font-semibold tracking-tight text-ink">
+            Udemy Reset Progress
+          </h1>
+          <p class="text-[11px] text-ink-muted mt-0.5">
+            Manage your course progress
+          </p>
+        </div>
         <button
           onClick={openSettings}
-          class="rounded-lg p-1.5 text-base-content/40 transition-colors hover:bg-base-200 hover:text-base-content/70"
+          class="rounded-lg p-1.5 bg-surface text-ink-muted transition-all duration-150 hover:bg-surface-hover hover:text-ink focus-visible:ring-2 focus-visible:ring-brand/20 focus-visible:ring-offset-2"
           aria-label="Settings"
           title="Settings"
         >
@@ -129,15 +134,15 @@ export default function App() {
         </button>
       </div>
 
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2.5">
         <button
           onClick={handleReset}
-          class="btn w-full rounded-xl border-none text-sm font-medium shadow-sm transition-all duration-200"
+          class="w-full h-11 rounded-[10px] text-sm font-medium shadow-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand/20 focus-visible:ring-offset-2"
           classList={{
-            "bg-base-content text-base-100 hover:opacity-85 active:scale-[0.98]": resetStatus() === "initial",
-            "bg-base-200 text-base-content/60 cursor-wait": resetStatus() === "progress",
-            "bg-emerald-500 text-white": resetStatus() === "done",
-            "bg-red-500/90 text-white hover:bg-red-500": resetStatus() === "error",
+            "bg-brand text-white hover:bg-brand-hover active:scale-[0.98]": resetStatus() === "initial",
+            "bg-surface-hover text-ink-muted cursor-wait": resetStatus() === "progress",
+            "bg-ok text-white": resetStatus() === "done",
+            "bg-bad-soft text-bad hover:brightness-95": resetStatus() === "error",
           }}
           disabled={isAnyInProgress()}
           aria-busy={resetStatus() === "progress"}
@@ -148,12 +153,12 @@ export default function App() {
 
         <button
           onClick={handleComplete}
-          class="btn w-full rounded-xl border-none text-sm font-medium shadow-sm transition-all duration-200"
+          class="w-full h-11 rounded-[10px] text-sm font-medium transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand/20 focus-visible:ring-offset-2"
           classList={{
-            "bg-base-200 text-base-content/70 hover:bg-base-300 active:scale-[0.98]": completeStatus() === "initial",
-            "bg-base-200 text-base-content/60 cursor-wait": completeStatus() === "progress",
-            "bg-emerald-500 text-white": completeStatus() === "done",
-            "bg-red-500/90 text-white hover:bg-red-500": completeStatus() === "error",
+            "bg-surface text-ink hover:bg-surface-hover active:scale-[0.98]": completeStatus() === "initial",
+            "bg-surface-hover text-ink-muted cursor-wait": completeStatus() === "progress",
+            "bg-ok text-white": completeStatus() === "done",
+            "bg-bad-soft text-bad hover:brightness-95": completeStatus() === "error",
           }}
           disabled={isAnyInProgress()}
           aria-busy={completeStatus() === "progress"}
@@ -164,18 +169,23 @@ export default function App() {
       </div>
 
       {errorMessage() && (
-        <p class="mt-2 text-center text-xs text-red-500/80">
-          {errorMessage()}
-        </p>
+        <div class="mt-2.5 flex items-center gap-2 rounded-lg bg-bad-soft px-3 py-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 shrink-0 text-bad" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+          </svg>
+          <p class="text-xs font-medium text-bad">
+            {errorMessage()}
+          </p>
+        </div>
       )}
 
-      <div class="mt-4 text-center">
+      <div class="mt-3.5 text-center">
         <a
           target="_blank"
           href="https://shramko.dev/?utm_source=udemy-reset-progress&utm_medium=bottom_link&utm_campaign=all&utm_id=promo"
-          class="text-xs text-base-content/30 transition-colors hover:text-base-content/50"
+          class="text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60"
         >
-          Crafted with ❤️
+          shramko.dev
         </a>
       </div>
     </div>

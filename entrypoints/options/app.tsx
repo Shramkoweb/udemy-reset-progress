@@ -264,7 +264,7 @@ export default function App() {
     <Show when={!isAuto()}>
       <button
         onClick={() => { setAdvancedOpen(false); saveMode("auto"); }}
-        class="mt-2.5 w-full h-8 rounded-[10px] bg-surface text-[12px] font-medium text-ink-muted hover:bg-surface-hover active:scale-[0.98] transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand/20 focus-visible:ring-offset-2"
+        class="mt-2.5 w-full h-8 px-4 rounded-[10px] bg-surface text-[12px] font-medium text-ink-muted hover:bg-surface-hover active:scale-[0.98] transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand/20 focus-visible:ring-offset-2"
       >
         Reset to Auto
       </button>

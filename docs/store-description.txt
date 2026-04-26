@@ -1,0 +1,34 @@
+Reset or mark complete your Udemy course progress with a single click. Whether you want to re-watch a course from scratch or mark everything as done — Udemy Reset Progress handles it instantly.
+
+WHAT'S NEW IN 2.0 — SMART PACING MODES
+
+Some users experienced unexpected logouts when resetting large courses. Version 2.0 introduces smart pacing that adjusts speed based on your course size, so Udemy never sees suspicious activity:
+
+• Auto — Automatically picks the best speed for your course. Recommended for most users.
+• Turbo — Fastest speed for small courses (under 50 lectures).
+• Balanced — Reliable speed with batch cooldowns. Great for medium courses.
+• Safe — Slowest and most reliable. Best for large courses (200+ lectures).
+• Custom — Full control over delay, batch size, and cooldown timing.
+
+HOW IT WORKS
+
+1. Open any Udemy course page
+2. Click the extension icon in your toolbar
+3. Choose "Clear Progress" to reset or "Mark All Complete" to finish
+4. Done — progress updates instantly on the page
+
+FEATURES
+
+• Two actions — Reset all progress or mark every lecture complete
+• Smart pacing — Auto-adjusts speed to avoid rate-limiting and session issues
+• Custom mode — Fine-tune delay (50–1000ms) and batch size (5–50) for full control
+• Lightweight — Under 85 KiB total, no background scripts, no bloat
+• Private — Zero data collection, zero analytics, zero tracking, zero network requests
+• Open source — Full source code on GitHub (AGPL-3 license)
+• Cross-browser — Works on Chrome, Firefox, and Edge
+
+HAVING TROUBLE?
+
+If you experience unexpected logouts or errors, open Settings (gear icon) and switch to Safe mode or increase the delay in Custom mode. This gives Udemy more time to process each request.
+
+Questions or feedback? Visit our GitHub page: github.com/Shramkoweb/udemy-reset-progress

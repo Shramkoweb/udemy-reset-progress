@@ -1,13 +1,22 @@
 # Udemy Reset Progress
 
-Reset or mark complete your Udemy course progress in one click. Built with [WXT](https://wxt.dev/), [SolidJS](https://www.solidjs.com/), and [TailwindCSS](https://tailwindcss.com/).
+> Reset or complete your Udemy course progress in one click.
+
+Whether you want to re-watch a course from scratch or mark everything as done — this extension handles it instantly. Smart pacing modes prevent rate-limiting and unexpected logouts, even on large courses with hundreds of lectures.
+
+[Chrome Web Store](https://chromewebstore.google.com/detail/udemy-reset-progress/dddnklikfgdefjekcbhehjogkpfkbdlo) · [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/udemy-reset-progress/) · [Report an Issue](https://github.com/Shramkoweb/udemy-reset-progress/issues)
 
 ## Features
 
 - **Clear Progress** — reset all lecture completion checkmarks across every section
 - **Mark All Complete** — mark every lecture as completed in one click
-- **Configurable delay** — adjust speed (50–500ms) to avoid rate-limiting
-- **Lightweight** — under 35 KiB, no background processes
+- **Smart Pacing** — auto-adjusts speed based on course size to avoid rate-limiting
+  - *Auto* — best speed for your course (recommended)
+  - *Turbo* — fastest, for small courses
+  - *Balanced* — reliable with batch cooldowns
+  - *Safe* — slowest and most reliable for large courses
+  - *Custom* — full control over delay (50–1000ms), batch size, and cooldowns
+- **Lightweight** — under 85 KiB, no background processes
 - **Private** — zero data collection, zero analytics, zero network requests
 - **Cross-browser** — Chrome, Firefox, and Edge
 
@@ -53,7 +62,7 @@ pnpm run build:firefox
 3. Choose **Clear Progress** to reset or **Mark All Complete** to finish
 4. Done
 
-If you experience rate-limiting or unexpected logouts, increase the action delay in Settings (gear icon).
+> **Tip:** If you experience rate-limiting or unexpected logouts, open Settings (gear icon) and switch to **Safe** mode.
 
 ## Development
 
@@ -63,6 +72,9 @@ pnpm run dev
 
 # Start development server for Firefox
 pnpm run dev:firefox
+
+# Run tests
+pnpm run test
 
 # Type checking
 pnpm run compile

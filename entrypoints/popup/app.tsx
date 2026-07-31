@@ -1,4 +1,4 @@
-import { createEffect, createSignal, JSX, onCleanup, onMount } from "solid-js";
+import { createEffect, createSignal, type JSX, onCleanup, onMount } from "solid-js";
 
 import type { ScriptResult } from "@/content-scripts/reset-udemy-progress";
 import { resetUdemyProgress } from "@/content-scripts/reset-udemy-progress";
@@ -46,9 +46,10 @@ export default function App() {
     try {
       setStatus("progress");
       setErrorMessage("");
-      const [{ id: tabId }] = await browser.tabs.query({
+      const [tab] = await browser.tabs.query({
         active: true, currentWindow: true,
       });
+      const tabId = tab?.id;
       if (!tabId) {
         setErrorMessage("Cannot access the current tab");
         setStatus("error");
@@ -60,11 +61,11 @@ export default function App() {
       const customBatch = await customBatchSizeItem.getValue();
       const pacing = resolvePacing(mode, { delayMs: customDelay, batchSize: customBatch });
 
-      const [{ result }] = await browser.scripting.executeScript({
+      const [injection] = await browser.scripting.executeScript({
         target: { tabId }, func, args: [pacing],
       });
 
-      const scriptResult = result as ScriptResult | undefined;
+      const scriptResult = injection?.result as ScriptResult | undefined;
       if (scriptResult && !scriptResult.success) {
         setErrorMessage(ERROR_MESSAGES[scriptResult.error] ?? "Something went wrong");
         setStatus("error");

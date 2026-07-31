@@ -3,3 +3,16 @@ allowBuilds:
   spawn-sync: true
 minimumReleaseAgeExclude:
   - daisyui@5.7.9
+# Security overrides for vulnerable transitive dev/build deps (GitHub Dependabot
+# alerts). Each is pinned to its patched floor within the CURRENT major (caret),
+# so wxt 0.21 / vite 7 keep working — a bare ">=" could jump to vite 8 / babel 8.
+# Drop an entry once a direct dep (wxt, @tailwindcss/vite, vitest) pulls the
+# patched version on its own.
+overrides:
+  rollup: '^4.59.0'                 # GHSA-mw96-cpmx-2vgc  (path traversal write)
+  vite: '^7.3.5'                    # GHSA-v2wj/p9ff/fx2h  (fs.deny bypass, ws file read)
+  postcss: '^8.5.18'                # GHSA-6g55/r28c + XSS  (sourceMappingURL, </style>)
+  defu: '^6.1.5'                    # GHSA-737v-mqg7-c878   (prototype pollution)
+  '@babel/core': '^7.29.1'          # GHSA-4x5r-pxfx-6jf8   (sourceMappingURL file read)
+  'picomatch@<2.3.2': '^2.3.2'      # GHSA-c2c7-rcm5-vvqj   (ReDoS) — 2.x line
+  'picomatch@>=4.0.0 <4.0.4': '^4.0.4'  #  same advisory — 4.x line

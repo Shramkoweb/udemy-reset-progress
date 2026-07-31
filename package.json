@@ -32,16 +32,16 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
-    "solid-js": "1.9.12"
+    "solid-js": "1.9.14"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "4.2.4",
-    "@types/chrome": "0.1.40",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/chrome": "0.2.2",
     "@wxt-dev/module-solid": "1.1.4",
-    "daisyui": "5.5.19",
-    "tailwindcss": "4.2.4",
+    "daisyui": "5.7.9",
+    "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
-    "vitest": "4.1.5",
-    "wxt": "0.21.0"
+    "vitest": "4.1.10",
+    "wxt": "0.21.2"
   }
 }

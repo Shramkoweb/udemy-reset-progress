@@ -41,7 +41,7 @@
     "daisyui": "5.7.9",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
-    "vitest": "4.1.10",
+    "vitest": "4.1.11",
     "wxt": "0.21.2"
   }
 }

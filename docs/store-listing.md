@@ -43,7 +43,7 @@ Udemy Reset Progress does it in seconds.
 • Safe — slowest and most reliable, for courses with hundreds of lectures.
 • Custom — set the delay (50–1000ms) and batch size (5–50) yourself; the cooldown between batches is derived from your delay.
 
-**Lightweight** — Under 40 KB packaged. No background processes. Opens instantly.
+**Lightweight** — Under 35 KB packaged. No background processes. Opens instantly.
 
 **Private** — Zero data collection. Zero analytics. Zero network requests. Everything happens locally in your browser. The extension asks for three permissions and nothing more: activeTab and scripting to act on the course page you have open, and storage to remember your speed setting.
 
@@ -85,7 +85,7 @@ This extension does it in seconds.
 • Mark All Complete — mark every lecture as done in one click
 • Smart pacing — Auto, Turbo, Balanced and Safe modes space the work out so large courses do not trigger unexpected logouts
 • Custom mode — set the delay (50–1000ms) and batch size (5–50) yourself
-• Under 40 KB packaged, no background processes
+• Under 35 KB packaged, no background processes
 • Zero data collection, zero analytics, zero network requests
 • Open source under AGPL-3: https://github.com/Shramkoweb/udemy-reset-progress
 

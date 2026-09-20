@@ -39,6 +39,8 @@ export default function App() {
   const [version, setVersion] = createSignal("");
   const [currentMode, setCurrentMode] = createSignal("auto");
   let resetTimer: ReturnType<typeof setTimeout> | null = null;
+  let completeTimer: ReturnType<typeof setTimeout> | null = null;
+  let shareTimer: ReturnType<typeof setTimeout> | null = null;
 
   onMount(async () => {
     await migrateStorage();
@@ -138,9 +140,13 @@ export default function App() {
   const handleComplete = () => executeScript(completeUdemyProgress, setCompleteStatus);
 
   const handleShare = async () => {
-    await navigator.clipboard.writeText(STORE_URL);
+    try {
+      await navigator.clipboard.writeText(STORE_URL);
+    } catch {
+      return; // The clipboard is refused outright while the popup is not focused.
+    }
     setShareCopied(true);
-    setTimeout(() => setShareCopied(false), 2000);
+    shareTimer = setTimeout(() => setShareCopied(false), 2000);
   };
 
   createEffect(() => {
@@ -154,7 +160,7 @@ export default function App() {
 
   createEffect(() => {
     if (completeStatus() === "done" || completeStatus() === "error") {
-      resetTimer = setTimeout(() => {
+      completeTimer = setTimeout(() => {
         setCompleteStatus("initial");
         setErrorMessage("");
       }, RESET_TIMEOUT_MS);
@@ -162,8 +168,8 @@ export default function App() {
   });
 
   onCleanup(() => {
-    if (resetTimer) {
-      clearTimeout(resetTimer);
+    for (const timer of [resetTimer, completeTimer, shareTimer]) {
+      if (timer) clearTimeout(timer);
     }
   });
 

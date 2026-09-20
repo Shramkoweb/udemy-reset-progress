@@ -487,5 +487,64 @@ describe("the footer", () => {
     expect(link).toHaveAttribute("target", "_blank");
     expect(link.getAttribute("href")).toContain("utm_source=udemy-reset-progress");
   });
+
+  it("does not hand the opened tab a reference back to the popup", async () => {
+    await mount();
+    expect(screen.getByRole("link", { name: "shramko.dev" }))
+      .toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("keeps working when the browser refuses the clipboard", async () => {
+    const rejections: unknown[] = [];
+    const record = (reason: unknown) => { rejections.push(reason); };
+    process.on("unhandledRejection", record);
+
+    env.writeText.mockRejectedValue(new Error("Document is not focused"));
+    await seed({ successCount: 3 });
+    await mount();
+
+    fireEvent.click(screen.getByRole("button", { name: "Share with a friend" }));
+    await waitFor(() => expect(env.writeText).toHaveBeenCalled());
+    await new Promise((r) => setTimeout(r, 10));
+    process.off("unhandledRejection", record);
+
+    expect(rejections).toEqual([]);
+    expect(screen.getByRole("button", { name: "Share with a friend" })).toBeInTheDocument();
+  });
+});
+
+describe("timers", () => {
+  it("clears every timer it started when the popup closes", async () => {
+    const created: unknown[] = [];
+    const cleared: unknown[] = [];
+    const realSetTimeout = globalThis.setTimeout;
+    const realClearTimeout = globalThis.clearTimeout;
+
+    vi.stubGlobal("setTimeout", ((fn: () => void, ms?: number) => {
+      const id = realSetTimeout(fn, ms);
+      if (ms === 2000) created.push(id);
+      return id;
+    }) as unknown as typeof setTimeout);
+    vi.stubGlobal("clearTimeout", ((id: never) => {
+      cleared.push(id);
+      return realClearTimeout(id);
+    }) as unknown as typeof clearTimeout);
+
+    env.succeedScriptWith(1);
+    await seed({ successCount: 3 });
+    const { unmount } = await mount();
+
+    fireEvent.click(clearButton());
+    await waitFor(() => expect(clearButton()).toHaveTextContent("Done"));
+    fireEvent.click(completeButton());
+    await waitFor(() => expect(completeButton()).toHaveTextContent("Done"));
+    fireEvent.click(screen.getByRole("button", { name: "Share with a friend" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "Link copied!" })).toBeInTheDocument());
+
+    expect(created).toHaveLength(3);
+    unmount();
+
+    expect(created.filter((id) => !cleared.includes(id))).toEqual([]);
+  });
 });
 

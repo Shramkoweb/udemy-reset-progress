@@ -2,7 +2,7 @@
   "name": "udemy-reset-progress",
   "description": "Udemy Reset Progress Web Extension",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.1.1",
   "type": "module",
   "author": {
     "name": "Serhii Shramko",

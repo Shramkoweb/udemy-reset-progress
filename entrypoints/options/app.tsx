@@ -228,6 +228,7 @@ export default function App() {
             <input
               ref={delayRef}
               type="range"
+              aria-label="Action delay"
               min="50"
               max="1000"
               step="50"
@@ -252,6 +253,7 @@ export default function App() {
             <input
               ref={batchRef}
               type="range"
+              aria-label="Batch size"
               min="5"
               max="50"
               step="5"

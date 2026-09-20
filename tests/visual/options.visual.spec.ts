@@ -103,6 +103,12 @@ test.describe("settings", () => {
     }
   });
 
+  test("the sliders announce themselves", async ({ page }) => {
+    await openOptions(page, { storage: { mode: "custom", customDelay: 250, customBatchSize: 30 } });
+    await expect(page.getByRole("slider", { name: "Action delay" })).toBeVisible();
+    await expect(page.getByRole("slider", { name: "Batch size" })).toBeVisible();
+  });
+
   test("the Saved badge confirms a change", async ({ page }) => {
     const root = await openOptions(page, { storage: { mode: "balanced" }, freezeTimers: true });
     await preset(page, "Safe").click();

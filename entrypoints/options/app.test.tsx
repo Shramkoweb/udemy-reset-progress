@@ -80,6 +80,14 @@ describe("opening the settings", () => {
     expect(sliders()[0]!.style.background).toContain("50%");
   });
 
+  it("gives each slider a name a screen reader can announce", async () => {
+    await mount("custom");
+    await waitFor(() => expect(sliders()).toHaveLength(2));
+
+    expect(screen.getByRole("slider", { name: "Action delay" })).toBeInTheDocument();
+    expect(screen.getByRole("slider", { name: "Batch size" })).toBeInTheDocument();
+  });
+
   it("keeps the slider ranges in step with what custom mode accepts", async () => {
     await mount("custom");
     await waitFor(() => expect(sliders()).toHaveLength(2));

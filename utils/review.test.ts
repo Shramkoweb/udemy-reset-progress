@@ -339,7 +339,7 @@ describe("feedback payload edge cases", () => {
   it("keeps the uninstall report free of anything the user did not type", () => {
     const url = new URL(buildUninstallUrl({ version: "2.1.0", browserName: "Chrome", mode: "turbo" }));
     expect(url.searchParams.get("comment")).toBeNull();
-    expect([...url.searchParams.keys()].sort()).toEqual(["browser", "mode", "reason", "source", "version"]);
+    expect([...url.searchParams.keys()].toSorted()).toEqual(["browser", "mode", "reason", "source", "version"]);
   });
 
   it("sends the uninstall report to the same form as the feedback path", () => {
@@ -354,7 +354,7 @@ describe("feedback payload edge cases", () => {
 
   it("declares exactly the fields the form URL carries", () => {
     const url = new URL(buildFormUrl(base));
-    expect([...url.searchParams.keys()].sort()).toEqual([...FEEDBACK_FIELDS].sort());
+    expect([...url.searchParams.keys()].toSorted()).toEqual([...FEEDBACK_FIELDS].toSorted());
   });
 
   it("never emits a relative or javascript: destination", () => {

@@ -104,9 +104,11 @@ describe("resolvePacing edge cases", () => {
       .toEqual({ delayMs: 300, batchSize: -1, cooldownMs: 0 });
   });
 
-  it("keeps every preset cooldown at least as long as its delay", () => {
-    for (const preset of Object.values(PRESETS)) {
-      if (preset.batchSize > 0) expect(preset.cooldownMs).toBeGreaterThan(preset.delayMs);
+  it("keeps every batching preset's cooldown longer than its delay", () => {
+    const batching = Object.values(PRESETS).filter((preset) => preset.batchSize > 0);
+    expect(batching).not.toHaveLength(0);
+    for (const preset of batching) {
+      expect(preset.cooldownMs).toBeGreaterThan(preset.delayMs);
     }
   });
 

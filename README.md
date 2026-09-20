@@ -77,8 +77,11 @@ pnpm run dev
 # Start development server for Firefox
 pnpm run dev:firefox
 
-# Run tests
+# Run unit and component tests
 pnpm run test
+
+# Run visual regression tests (Chromium, fully local)
+pnpm run test:visual
 
 # Type checking
 pnpm run compile
@@ -90,12 +93,17 @@ pnpm run build
 pnpm run zip
 ```
 
+See [docs/testing.md](docs/testing.md) for what is covered and how to update the
+visual baselines after an intentional UI change.
+
 ## Tech Stack
 
 - [WXT](https://wxt.dev/) — Web Extension Framework
 - [SolidJS](https://www.solidjs.com/) — UI Framework
 - [TailwindCSS](https://tailwindcss.com/) — CSS Framework
 - [DaisyUI](https://daisyui.com/) — Component Library
+- [Vitest](https://vitest.dev/) — Unit and component tests
+- [Playwright](https://playwright.dev/) — Visual regression tests
 - TypeScript
 
 ## License

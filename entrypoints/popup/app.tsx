@@ -1,13 +1,19 @@
-import { createEffect, createSignal, type JSX, onCleanup, onMount } from "solid-js";
+import { createEffect, createSignal, type JSX, onCleanup, onMount, Show } from "solid-js";
 
 import type { ScriptResult } from "@/content-scripts/reset-udemy-progress";
 import { resetUdemyProgress } from "@/content-scripts/reset-udemy-progress";
 import { completeUdemyProgress } from "@/content-scripts/complete-udemy-progress";
 import { resolvePacing } from "@/utils/pacing";
 import {
-  AMO_URL, CWS_URL, modeItem, customDelayItem, customBatchSizeItem,
-  popupOpensItem, successCountItem, migrateStorage,
+  browserName, storeUrl, storeReviewUrl, modeItem, customDelayItem, customBatchSizeItem,
+  popupOpensItem, successCountItem, reviewStateItem, migrateStorage,
 } from "@/utils/storage";
+import {
+  afterDismiss, afterFeedback, afterRated, buildUninstallUrl, DEFAULT_REVIEW_STATE,
+  hasResponded, isEligible, recordSuccess, type ReviewState,
+} from "@/utils/review";
+import ReviewPrompt, { type ReviewResolution } from "./review-prompt";
+import { storage } from "wxt/utils/storage";
 
 import "~/assets/tailwind.css";
 
@@ -18,27 +24,47 @@ const ERROR_MESSAGES: Record<string, string> = {
   NO_CURRICULUM: "Open a Udemy course page first", NO_SECTIONS: "No course sections found on this page",
 };
 
-const STORE_URL = navigator.userAgent.includes("Firefox") ? AMO_URL : CWS_URL;
+const STORE_URL = storeUrl();
+const REVIEW_URL = storeReviewUrl();
+const BROWSER_NAME = browserName();
 
 export default function App() {
   const [resetStatus, setResetStatus] = createSignal<State>("initial");
   const [completeStatus, setCompleteStatus] = createSignal<State>("initial");
   const [errorMessage, setErrorMessage] = createSignal("");
-  const [popupOpens, setPopupOpens] = createSignal(0);
   const [successCount, setSuccessCount] = createSignal(0);
   const [shareCopied, setShareCopied] = createSignal(false);
+  const [reviewState, setReviewState] = createSignal<ReviewState>(DEFAULT_REVIEW_STATE);
+  const [showReview, setShowReview] = createSignal(false);
+  const [version, setVersion] = createSignal("");
+  const [currentMode, setCurrentMode] = createSignal("auto");
   let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
   onMount(async () => {
     await migrateStorage();
 
     const opens = await popupOpensItem.getValue();
-    const next = opens + 1;
-    setPopupOpens(next);
-    await popupOpensItem.setValue(next);
+    await popupOpensItem.setValue(opens + 1);
 
     const successes = await successCountItem.getValue();
     setSuccessCount(successes);
+
+    setCurrentMode(await modeItem.getValue());
+
+    const manifestVersion = browser.runtime.getManifest().version;
+    setVersion(manifestVersion);
+
+    setReviewState(await reviewStateItem.getValue());
+
+    browser.runtime.setUninstallURL(buildUninstallUrl({
+      version: manifestVersion, browserName: BROWSER_NAME, mode: await modeItem.getValue(),
+    }));
+
+    if (import.meta.env.DEV) {
+      const { installReviewConsole } = await import("./dev-review-console");
+      installReviewConsole();
+      if (await storage.getItem<boolean>("local:devForceReview")) setShowReview(true);
+    }
   });
 
   const executeScript = async (func: typeof resetUdemyProgress | typeof completeUdemyProgress, setStatus: (s: State) => void) => {
@@ -57,6 +83,7 @@ export default function App() {
       }
 
       const mode = await modeItem.getValue();
+      setCurrentMode(mode);
       const customDelay = await customDelayItem.getValue();
       const customBatch = await customBatchSizeItem.getValue();
       const pacing = resolvePacing(mode, { delayMs: customDelay, batchSize: customBatch });
@@ -77,10 +104,34 @@ export default function App() {
       await successCountItem.setValue(newCount);
 
       setStatus("done");
+      await maybeAskForReview(newCount);
     } catch {
       setErrorMessage("Make sure you're on a Udemy page");
       setStatus("error");
     }
+  };
+
+  const maybeAskForReview = async (newCount: number) => {
+    const now = Date.now();
+    const stamped = recordSuccess(reviewState(), now);
+    if (stamped !== reviewState()) {
+      setReviewState(stamped);
+      await reviewStateItem.setValue(stamped);
+    }
+    if (isEligible(stamped, newCount, now)) setShowReview(true);
+  };
+
+  const handleReviewResolve = async (resolution: ReviewResolution) => {
+    const now = Date.now();
+    const current = reviewState();
+    const next = resolution.kind === "rated"
+      ? afterRated(current)
+      : resolution.kind === "feedback"
+        ? afterFeedback(current, resolution.sentiment)
+        : afterDismiss(current, now);
+
+    setReviewState(next);
+    await reviewStateItem.setValue(next);
   };
 
   const handleReset = () => executeScript(resetUdemyProgress, setResetStatus);
@@ -138,16 +189,7 @@ export default function App() {
   };
 
   const renderFooter = () => {
-    if (popupOpens() >= 4 && popupOpens() <= 7) {
-      return (<a
-        target="_blank"
-        href={STORE_URL}
-        class="text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60"
-      >
-        Enjoying this? <span class="text-amber-400">&#9733;</span> Rate
-      </a>);
-    }
-    if (successCount() >= 3) {
+    if (!hasResponded(reviewState()) && successCount() >= 3) {
       return (<button
         type="button"
         onClick={handleShare}
@@ -240,6 +282,16 @@ export default function App() {
         {errorMessage()}
       </p>
     </div>)}
+
+    <Show when={showReview()}>
+      <ReviewPrompt
+        context={{
+          version: version(), browserName: BROWSER_NAME, mode: currentMode(), reviewUrl: REVIEW_URL,
+        }}
+        onResolve={handleReviewResolve}
+        onClose={() => setShowReview(false)}
+      />
+    </Show>
 
     <div class="mt-3.5 text-center">
       {renderFooter()}

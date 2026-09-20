@@ -1,8 +1,17 @@
 import { storage } from "wxt/utils/storage";
 import type { Mode } from "./pacing";
+import { DEFAULT_REVIEW_STATE, type ReviewState } from "./review";
 
 export const CWS_URL = "https://chromewebstore.google.com/detail/udemy-reset-progress/dddnklikfgdefjekcbhehjogkpfkbdlo";
 export const AMO_URL = "https://addons.mozilla.org/en-US/firefox/addon/udemy-reset-progress/";
+
+export const CWS_REVIEW_URL = `${CWS_URL}/reviews`;
+export const AMO_REVIEW_URL = `${AMO_URL}reviews/`;
+
+export const isFirefox = () => navigator.userAgent.includes("Firefox");
+export const storeUrl = () => (isFirefox() ? AMO_URL : CWS_URL);
+export const storeReviewUrl = () => (isFirefox() ? AMO_REVIEW_URL : CWS_REVIEW_URL);
+export const browserName = () => (isFirefox() ? "Firefox" : "Chrome");
 
 export const modeItem = storage.defineItem<Mode>("local:mode", {
   defaultValue: "auto",
@@ -22,6 +31,10 @@ export const popupOpensItem = storage.defineItem<number>("local:popupOpens", {
 
 export const successCountItem = storage.defineItem<number>("local:successCount", {
   defaultValue: 0,
+});
+
+export const reviewStateItem = storage.defineItem<ReviewState>("local:reviewState", {
+  defaultValue: DEFAULT_REVIEW_STATE,
 });
 
 /**

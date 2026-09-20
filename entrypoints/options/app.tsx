@@ -1,7 +1,8 @@
 import { createSignal, onMount, Show } from "solid-js";
 
 import type { Mode } from "@/utils/pacing";
-import { modeItem, customDelayItem, customBatchSizeItem } from "@/utils/storage";
+import { modeItem, customDelayItem, customBatchSizeItem, storeReviewUrl } from "@/utils/storage";
+import { feedbackHomeUrl } from "@/utils/review";
 
 import "~/assets/tailwind.css";
 
@@ -10,6 +11,10 @@ const PRESET_OPTIONS: { key: "turbo" | "balanced" | "safe"; name: string; desc: 
   { key: "balanced", name: "Balanced", desc: "Recommended for most courses" },
   { key: "safe", name: "Safe", desc: "Reliable for large courses" },
 ];
+
+const REVIEW_URL = storeReviewUrl();
+const FEEDBACK_URL = feedbackHomeUrl();
+const linkClass = "text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60";
 
 export default function App() {
   const [mode, setMode] = createSignal<Mode>("auto");
@@ -269,5 +274,16 @@ export default function App() {
         Reset to Auto
       </button>
     </Show>
+
+    {/* Always reachable — rating and complaining are never gated away */}
+    <div class="mt-3.5 flex items-center justify-center gap-3">
+      <a target="_blank" href={REVIEW_URL} class={linkClass}>
+        <span class="text-amber-400">&#9733;</span> Rate
+      </a>
+      <span class="text-[11px] text-ink-muted/20">&middot;</span>
+      <a target="_blank" href={FEEDBACK_URL} class={linkClass}>
+        Send feedback
+      </a>
+    </div>
   </div>);
 }

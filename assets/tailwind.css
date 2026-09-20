@@ -1,4 +1,6 @@
-@import "tailwindcss";
+/* Without source(none) Tailwind harvests class names out of README and docs/. */
+@import "tailwindcss" source(none);
+@source "../entrypoints";
 
 @plugin "daisyui" {
   themes: light --default;

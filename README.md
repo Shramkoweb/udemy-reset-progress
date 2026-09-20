@@ -16,7 +16,11 @@ Whether you want to re-watch a course from scratch or mark everything as done �
   - *Balanced* — reliable with batch cooldowns
   - *Safe* — slowest and most reliable for large courses
   - *Custom* — full control over delay (50–1000ms), batch size, and cooldowns
-- **Lightweight** — under 85 KiB, no background processes
+- **Smart feedback prompt** — after a couple of successful runs the popup asks how things are going;
+  happy users get a one-tap link to the store review page, everyone else gets a short pre-filled
+  form that needs no account (email and GitHub stay available as alternatives). The extension itself
+  sends nothing — a report only leaves your browser if you open the form and submit it yourself
+- **Lightweight** — no background processes
 - **Private** — zero data collection, zero analytics, zero network requests
 - **Cross-browser** — Chrome, Firefox, and Edge
 

@@ -29,18 +29,31 @@
     "compile": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots",
+    "test:visual:ui": "playwright test --ui",
+    "test:visual:report": "playwright show-report playwright-report",
+    "test:all": "vitest run && playwright test",
     "postinstall": "wxt prepare"
   },
   "dependencies": {
     "solid-js": "1.9.15"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@solidjs/testing-library": "0.8.10",
     "@tailwindcss/vite": "4.3.3",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/user-event": "14.6.7",
     "@types/chrome": "0.3.0",
+    "@vitest/coverage-v8": "4.1.11",
     "@wxt-dev/module-solid": "1.1.4",
-    "daisyui": "5.7.40",
+    "daisyui": "5.7.42",
+    "jsdom": "30.1.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
+    "vite-plugin-solid": "2.11.14",
     "vitest": "4.1.11",
     "wxt": "0.21.4"
   }

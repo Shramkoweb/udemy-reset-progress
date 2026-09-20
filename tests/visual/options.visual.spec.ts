@@ -94,6 +94,15 @@ test.describe("settings", () => {
     await expect(preset(page, "Balanced")).toBeVisible();
   });
 
+  test("both outbound links are safe to open in a new tab", async ({ page }) => {
+    await openOptions(page);
+    for (const name of [/Rate/, "Send feedback"]) {
+      const link = page.getByRole("link", { name });
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    }
+  });
+
   test("the Saved badge confirms a change", async ({ page }) => {
     const root = await openOptions(page, { storage: { mode: "balanced" }, freezeTimers: true });
     await preset(page, "Safe").click();

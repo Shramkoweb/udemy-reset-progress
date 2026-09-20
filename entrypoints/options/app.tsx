@@ -286,11 +286,11 @@ export default function App() {
 
     {/* Always reachable — rating and complaining are never gated away */}
     <div class="mt-3.5 flex items-center justify-center gap-3">
-      <a target="_blank" href={REVIEW_URL} class={linkClass}>
+      <a target="_blank" rel="noopener noreferrer" href={REVIEW_URL} class={linkClass}>
         <span class="text-amber-400">&#9733;</span> Rate
       </a>
       <span class="text-[11px] text-ink-muted/20">&middot;</span>
-      <a target="_blank" href={FEEDBACK_URL} class={linkClass}>
+      <a target="_blank" rel="noopener noreferrer" href={FEEDBACK_URL} class={linkClass}>
         Send feedback
       </a>
     </div>

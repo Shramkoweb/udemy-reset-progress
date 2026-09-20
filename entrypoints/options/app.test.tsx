@@ -319,6 +319,13 @@ describe("the always-available links", () => {
     expect(feedback.getAttribute("href")).toMatch(/^https:\/\/tally\.so\/r\//);
   });
 
+  it("does not hand either opened tab a reference back to the settings page", async () => {
+    await mount();
+    for (const name of [/Rate/, "Send feedback"]) {
+      expect(screen.getByRole("link", { name })).toHaveAttribute("rel", "noopener noreferrer");
+    }
+  });
+
   it("keeps both routes visible in every mode", async () => {
     for (const mode of ["auto", "turbo", "custom"] as const) {
       await storage.clear("local");

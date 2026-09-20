@@ -111,6 +111,13 @@ test.describe("popup", () => {
     await shot(root, "share-copied");
   });
 
+  test("the author link is safe to open in a new tab", async ({ page }) => {
+    await openPopup(page);
+    const link = page.getByRole("link", { name: "shramko.dev" });
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   test("the settings page is one click away", async ({ page }) => {
     await openPopup(page);
     await page.getByRole("button", { name: "Settings" }).click();

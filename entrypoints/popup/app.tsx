@@ -200,6 +200,7 @@ export default function App() {
     }
     return (<a
       target="_blank"
+      rel="noopener noreferrer"
       href="https://shramko.dev/?utm_source=udemy-reset-progress&utm_medium=bottom_link&utm_campaign=all&utm_id=promo"
       class="text-[11px] text-ink-muted/40 transition-colors hover:text-ink-muted/60"
     >

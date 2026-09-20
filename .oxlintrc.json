@@ -1,0 +1,45 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "jsx-a11y", "import", "promise", "vitest"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "ignorePatterns": [".output", ".wxt", "coverage", "test-results", "playwright-report"],
+  "rules": {
+    // Solid assigns ref={} through the compiler, so the variable looks unwritten.
+    "no-unassigned-vars": "off",
+    // Suggests <fieldset> for role="group", which drags in its own default styling.
+    "jsx-a11y/prefer-tag-over-role": "off",
+    // A bare CSS import is how the stylesheet reaches the bundle.
+    "import/no-unassigned-import": "off",
+    // Solid components keep their handlers in scope on purpose.
+    "unicorn/consistent-function-scoping": "off"
+  },
+  "overrides": [
+    {
+      "files": ["content-scripts/**"],
+      "rules": {
+        // The sequential await IS the pacing feature; Promise.all would restore
+        // the burst of requests that gets users logged out of Udemy.
+        "no-await-in-loop": "off",
+        // These run through executeScript, so every helper must stay inside the
+        // injected function. Hoisting sleep to module scope breaks injection.
+        "unicorn/consistent-function-scoping": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "tests/**"],
+      "rules": {
+        "no-await-in-loop": "off",
+        "unicorn/consistent-function-scoping": "off",
+        // Assertions live inside mount()/settleMode() helpers the rule cannot follow.
+        "vitest/expect-expect": "off",
+        "vitest/require-mock-type-parameters": "off",
+        // __gets and __opened are deliberate globals injected into the page.
+        "no-underscore-dangle": "off"
+      }
+    }
+  ]
+}

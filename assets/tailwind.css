@@ -2,8 +2,11 @@
 @import "tailwindcss" source(none);
 @source "../entrypoints";
 
+/* include is a whitelist: add a component here or it will not ship. Without it
+   the scanner turns words like renderFooter into daisyui components. */
 @plugin "daisyui" {
   themes: light --default;
+  include: loading;
 }
 
 @theme {

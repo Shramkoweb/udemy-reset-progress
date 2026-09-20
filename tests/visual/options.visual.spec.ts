@@ -81,6 +81,19 @@ test.describe("settings", () => {
     await shot(root, "reset-to-auto");
   });
 
+  test("the Auto switch is reachable and operable from the keyboard", async ({ page }) => {
+    await openOptions(page);
+    const auto = page.getByRole("switch", { name: "Auto speed mode" });
+    await expect(auto).toHaveAttribute("aria-checked", "true");
+
+    await auto.focus();
+    await expect(auto).toBeFocused();
+    await page.keyboard.press("Space");
+
+    await expect(auto).toHaveAttribute("aria-checked", "false");
+    await expect(preset(page, "Balanced")).toBeVisible();
+  });
+
   test("the Saved badge confirms a change", async ({ page }) => {
     const root = await openOptions(page, { storage: { mode: "balanced" }, freezeTimers: true });
     await preset(page, "Safe").click();

@@ -130,7 +130,14 @@ export default function App() {
         {/* Auto toggle row */}
         <div class="flex items-center justify-between">
           <h2 class="text-[13px] font-medium text-ink">Speed mode</h2>
-          <label class="flex items-center gap-2 cursor-pointer" onClick={handleAutoToggle}>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={isAuto()}
+            aria-label="Auto speed mode"
+            onClick={handleAutoToggle}
+            class="flex items-center gap-2 cursor-pointer rounded-md focus-visible:ring-2 focus-visible:ring-brand/20 focus-visible:ring-offset-2"
+          >
             <span class="text-[11px] font-medium text-ink-muted">Auto</span>
             <div
               class="relative w-9 h-5 rounded-full transition-colors duration-200"
@@ -144,7 +151,7 @@ export default function App() {
                 classList={{ "translate-x-4": isAuto() }}
               />
             </div>
-          </label>
+          </button>
         </div>
 
         {/* Auto description */}
@@ -160,6 +167,8 @@ export default function App() {
             {PRESET_OPTIONS.map(({ key, name, desc }) => (
               <button
                 onClick={() => handlePreset(key)}
+                aria-label={name}
+                aria-pressed={isPreset(key) && !advancedOpen()}
                 class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all duration-150"
                 classList={{
                   "ring-2 ring-brand bg-brand-soft/30": isPreset(key) && !advancedOpen(),

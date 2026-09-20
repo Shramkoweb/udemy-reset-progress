@@ -2,7 +2,7 @@
   "name": "udemy-reset-progress",
   "description": "Reset or complete Udemy course progress in one click. Smart pacing avoids logouts. Private, open source, actively maintained.",
   "private": true,
-  "version": "2.1.1",
+  "version": "2.1.2",
   "type": "module",
   "author": {
     "name": "Serhii Shramko",

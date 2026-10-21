@@ -7,6 +7,7 @@ minimumReleaseAgeExclude:
   - '@vitest/mocker@5.0.2'
   - '@vitest/spy@5.0.2'
   - vitest@5.0.2
+  - '@types/chrome@0.3.6'
 # vite is NOT a security override any more (GHSA-v2wj/p9ff/fx2h is long patched).
 # It stays as a major pin: wxt 0.21 peer-requires vite ^7.3.5, and without it
 # pnpm resolves vite 8 (swapping rollup for rolldown) and breaks that peer.
